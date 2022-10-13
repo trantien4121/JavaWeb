@@ -23,6 +23,31 @@
 	
 	<title>MT Store</title>
 </head>
+<style>
+.nav-item{
+	position: relative
+}
+.header__cart-notice{
+	position: absolute;
+    top: 0px;
+    right: 70px;
+    padding: 1px 5px;
+    font-size: 0.6rem;
+    /* line-height: 1rem; */
+    border: 2px solid #7B6BEE;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #7B68EE;
+}
+.tbd{
+	position: relative;
+}
+.btn-clear-selection{
+	position: absolute;
+	top: 40px;
+	right: 272px;
+}
+</style>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7B68EE">
     	<a class="navbar-brand ml-5" href="#" style="color: #fff; font-weight: 700;">MT Store</a>
@@ -36,7 +61,15 @@
               <a class="nav-link ml-3" href="htsach.jsp" style="color: #fff;"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Giỏ hàng</a>
+              <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> 
+              	<i class="fa fa-cart-plus mr-2" aria-hidden="true"></i> <span>Giỏ hàng</span>
+              	<% 
+              		giohangbo gh=(giohangbo)session.getAttribute("gio");
+              		if(session.getAttribute("gio")!=null && gh.ds.size()!=0){
+              	%>
+              		<span class="header__cart-notice"><%=gh.ds.size()%></span>
+              	<%} %>
+              </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
@@ -72,7 +105,7 @@
           </ul>
         </div>
     </nav>
-<table width="1200" align="center" class="mt-3">
+<table width="1200" align="center" class="mt-3 tbd">
    <tr>
       <td width="200" valign="top"> <span style="font-weight: 700">Loại sách</span>
       	<table>
@@ -91,15 +124,16 @@
        	</table>
        </td>
       <td width="800" valign="top" class="pr-4"> <span style="font-weight: 700">Hiển thị sách</span>
-      	<table class="table table-hover mt-2 ">
+      	<table class="table table-hover mt-2">
       		<% 
-      			giohangbo gh=
-           		(giohangbo)session.getAttribute("gio"); 
+      			/*giohangbo gh=
+           		(giohangbo)session.getAttribute("gio"); */
            	%>
       		
       		<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){%>
       		<thead>
       			<tr>
+      				<th>Chọn</th>
       				<th>Mã sách</th>
                 	<th>Tên sách</th>
                 	<th>Giá</th>
@@ -112,61 +146,48 @@
       		
       		<%  
       			if(gh!=null){
-      	  		for(giohangbean s: gh.ds){
+      	  		for(giohangbean s: gh.ds){		
       		%>
       		
       		<tbody>
       			<tr>
+      			<form action="suaxoa.jsp" method="post" class="input-group pl-4 pr-4"> 	   
+      				<td><input type="checkbox" name="check" value="<%=s.getMasach() %>" /></td>
           			<td> <%=s.getMasach() 	%> </td>
            			<td> <%=s.getTensach() 	%> </td>
            			<td> <%=s.getGia() 		%> </td>
-           			<td width="190">
+           			<td width="150px">
            				
-           				<% 
-           				String btncong = request.getParameter("btncong" + s.getMasach());
-           				String btntru = request.getParameter("btntru" + s.getMasach());
-           				
-           				if (btncong!= null)
-           					s.setSoluong(s.getSoluong() + 1);
-           				
-           				if (btntru!= null && s.getSoluong()> 0)
-           						s.setSoluong(s.getSoluong() - 1);
-           				%>
-           				
-           				<!--  <script>
-           					$(".quantity").change(function(){
-           					})
-           				</script> -->
-           				
-           				<form action="htgio.jsp" class="input-group pl-4 pr-4">
-           					<div class="input-group-prepend">
-           						<button class="btn btn-danger" type="submit" name="btntru<%=s.getMasach()%>">-</button>
-           					</div>
-           					<input type="tel" class="form-control quantity" value="<%=s.getSoluong()%>" style="text-align: center"/>
-           					<div class="input-group-append">
-           						<button class="btn btn-success" type="submit" name="btncong<%=s.getMasach()%>">+</button>
-           					</div>
-           				</form>
-           			
+           				<input type="number" name="txtsl-<%=s.getMasach() %>" value ="<%=s.getSoluong()%>" min=0 class="form-control">
+           				  
            			</td>
            			<td> <%=s.getThanhtien()%> </td>
            			<td>
-            			<!--  <a href="" class="ml-2" style="text-decoration: none; color= #7B68EE; font-size: 20px" >
-            				<i class="fa fa-pencil-square" aria-hidden="true"></i>
-             			</a> -->
-             			<a href="xoamotsach.jsp?msx=<%=s.getMasach()%>" style="text-decoration: none; color: red; font-size: 20px">
-            				<i class="fa fa-trash" aria-hidden="true"></i>
-             			</a>
+             			<button type="submit" class="btn btn-info pr-2" name="butsua" value ="Update">
+							Update
+						</button>
+           				<button type="submit" class="btn btn-danger" name="butxoa" value ="Delete">
+           					<i class="fa fa-trash" aria-hidden="true"></i>
+           				</button>
             		</td>
+            		
       		<%} }%>	
-      		<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){ %>
+      				<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){ %>
+      					<button type=submit class="btn btn-clear-selection">
+            				<i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 18px"></i>
+            			</button>   
+            		<%} %> 
+      			</form>
       			</tr>
+      		<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){ %>
+      			
       			<tr>
       				<td></td>
       				<td></td>
       				<td></td>
-      				<td>
-      					<span class="pl-5">
+      				<td></td>
+      				<td class="pl-5 pt-3">
+      					<span>
       						<b>Tổng tiền: </b>
       					</span>
       					
@@ -197,3 +218,4 @@
 </table>
 </body>
 </html>
+

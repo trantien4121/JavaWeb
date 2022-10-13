@@ -13,8 +13,12 @@
 		String sl = request.getParameter("sls");
 		if (sl!=null){
 			gh.xoaTatCa();
-			response.sendRedirect("htgio.jsp");
 		}
+		session.setAttribute("gio", gh);
+		if(gh.ds.size()!=0)
+			response.sendRedirect("htgio.jsp");
+			else
+				response.sendRedirect("htsach.jsp");
 	%>
 </body>
 </html>

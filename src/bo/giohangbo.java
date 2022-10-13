@@ -30,4 +30,14 @@ public class giohangbo {
 	public void xoaTatCa() {
 		ds.clear();
 	}
+	public void CapnhapCart(String masach, long soluong) {
+        int n = ds.size();
+        for(int i=0; i<n; i++) 
+           for(giohangbean item: ds)
+               if(item.getMasach().equals(masach)){
+
+                   item.setSoluong(soluong);
+               }
+
+    }
 }

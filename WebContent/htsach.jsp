@@ -3,6 +3,7 @@
 <%@page import="bo.loaibo"%>
 <%@page import="bean.sachbean"%>
 <%@page import="bo.sachbo"%>
+<%@page import="bo.giohangbo"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -15,6 +16,23 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title>MT Store</title>
 </head>
+<style>
+.nav-item{
+	position: relative;
+}
+.header__cart-notice{
+	position: absolute;
+    top: 0px;
+    right: 70px;
+    padding: 1px 5px;
+    font-size: 0.6rem;
+    /* line-height: 1rem; */
+    border: 2px solid #7B6BEE;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #7B68EE;
+}
+</style>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7B68EE">
     	<a class="navbar-brand ml-5" href="#" style="color: #fff; font-weight: 700;">MT Store</a>
@@ -28,7 +46,15 @@
               <a class="nav-link ml-3" href="htsach.jsp" style="color: #fff;"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Giỏ hàng</a>
+              <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> 
+              	<i class="fa fa-cart-plus mr-2" aria-hidden="true"></i>  <span>Giỏ hàng</span>
+              	<% 
+              		giohangbo gh=(giohangbo)session.getAttribute("gio");
+              		if(session.getAttribute("gio")!=null && gh.ds.size()!=0){
+              	%>
+              		<span class="header__cart-notice"><%=gh.ds.size()%></span>
+              	<%} %>
+              </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
