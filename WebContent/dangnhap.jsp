@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
          <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link ml-3" href="htsach.jsp" style="color: #fff"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
+              <a class="nav-link ml-3" href="htsachservlet" style="color: #fff"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Giỏ hàng</a>
@@ -71,7 +71,7 @@
        </td>
       <td width="800" valign="top"> 
       	<table class="mt-2">
-      		<form action="ktdn.jsp" method="post">
+      		<form action="ktdnservlet" method="post">	<!-- TRUOC LA KTDN.JSP -->
        		<!--	un <input name="txtun" type="text"> <br>
        			pass <input name="txtpass" type="password"> <br>
        			<input name="but1" type="submit" value="Login"> -->

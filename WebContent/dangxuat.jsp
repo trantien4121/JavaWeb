@@ -9,7 +9,7 @@
 <body>
 <% 
  session.invalidate();
- response.sendRedirect("htsach.jsp");
+ response.sendRedirect("htsachservlet");
 %>
 </body>
 </html>

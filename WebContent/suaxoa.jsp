@@ -70,7 +70,7 @@
 			if (gh.ds.size() != 0)
 				response.sendRedirect("htgio.jsp");
 			else
-				response.sendRedirect("htsach.jsp");
+				response.sendRedirect("htsachservlet");
 		   
 		
 	%>

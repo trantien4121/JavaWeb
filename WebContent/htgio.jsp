@@ -47,6 +47,7 @@
 	top: 40px;
 	right: 272px;
 }
+
 </style>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7B68EE">
@@ -58,10 +59,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link ml-3" href="htsach.jsp" style="color: #fff;"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
+              <a class="nav-link ml-3" href="htsachservlet" style="color: #fff;"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> 
+              <a class="nav-link ml-3" href="htgioservlet" style="color: #fff"> 
               	<i class="fa fa-cart-plus mr-2" aria-hidden="true"></i> <span>Giỏ hàng</span>
               	<% 
               		giohangbo gh=(giohangbo)session.getAttribute("gio");
@@ -109,8 +110,8 @@
    <tr>
       <td width="200" valign="top"> <span style="font-weight: 700">Loại sách</span>
       	<table>
-      		<%loaibo lbo=new loaibo();
-        		ArrayList<loaibean> dsloai=lbo.getLoai();
+      		<%
+      			ArrayList<loaibean> dsloai = (ArrayList<loaibean>) request.getAttribute("dsloai");
         		for(loaibean l: dsloai){
       		%>
           	<tr>
@@ -151,7 +152,7 @@
       		
       		<tbody>
       			<tr>
-      			<form action="suaxoa.jsp" method="post" class="input-group pl-4 pr-4"> 	   
+      			<form action="htgioservlet" method="post" class="input-group pl-4 pr-4"> 	<!-- Bắt đầu form sửa xóa -->   
       				<td><input type="checkbox" name="check" value="<%=s.getMasach() %>" /></td>
           			<td> <%=s.getMasach() 	%> </td>
            			<td> <%=s.getTensach() 	%> </td>
@@ -163,21 +164,30 @@
            			</td>
            			<td> <%=s.getThanhtien()%> </td>
            			<td>
-             			<button type="submit" class="btn btn-info pr-2" name="butsua" value ="Update">
+             			<!-- <button type="submit" class="btn btn-info pr-2" name="butsua" value ="Update">
 							Update
 						</button>
            				<button type="submit" class="btn btn-danger" name="butxoa" value ="Delete">
            					<i class="fa fa-trash" aria-hidden="true"></i>
+           				</button> --> <!-- But tu thiet ke, tuong ung voi phan sua xoa da comment -->
+           				
+           				 <button name="butsua" value="<%=s.getMasach() %>" class="btn btn-info" type="submit">
+           					Update
            				</button>
+           	 			<button name="butxoa" value="<%=s.getMasach() %>" class="btn btn-danger" type="submit">
+           					<i class="fa fa-trash" aria-hidden="true"></i>
+           				</button>
+           				
             		</td>
             		
       		<%} }%>	
       				<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){ %>
+      					<!-- Nút xóa các sản phẩm có check -->
       					<button type=submit class="btn btn-clear-selection">
             				<i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 18px"></i>
-            			</button>   
+            			</button>    
             		<%} %> 
-      			</form>
+      			
       			</tr>
       		<%if(session.getAttribute("gio")!=null && gh.ds.size()!=0){ %>
       			
@@ -196,12 +206,18 @@
       					<input type="text" class="pb-1 pt-1" value="<%=gh.Tongtien()%>" disabled size="8"/>
       				</td>
       				<td>
-      					<a href="xoatatcasach.jsp?sls=<%=gh.Tongtien() %>" class="btn btn-danger">
+      					<%-- <a href="xoatatcasach.jsp?sls=<%=gh.Tongtien() %>" class="btn btn-danger">
             				<i class="fa fa-trash" aria-hidden="true" style="color: white;"></i> 
             				<span class="ml-1" style="color: white">Xóa tất cả</span>
-      					</a>
+      					</a>  --%>    <!-- Đoạn code chạy trên xoatatca.jsp  -->
+      					
+      					<button type="submit" name="butxoatatca" value="<%=gh.Tongtien() %>" class="btn btn-danger">
+            				<i class="fa fa-trash" aria-hidden="true" style="color: white;"></i> 
+            				<span class="ml-1" style="color: white">Xóa tất cả</span>
+      					</button> 
       				</td>
       			</tr>
+      			</form> <!-- Kết thúc form sửa xóa -->   
       		<% }%>
       		</tbody>
       	</table>

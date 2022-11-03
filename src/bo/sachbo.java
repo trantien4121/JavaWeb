@@ -8,8 +8,8 @@ import dao.sachdao;
 public class sachbo {
 	sachdao sdao = new sachdao();
 	ArrayList <sachbean> ds;
-	public ArrayList<sachbean> getSach(){
-		ds = sdao.getSach();
+	public ArrayList<sachbean> getSach(int start, int num){
+		ds = sdao.getSach(start, num);
 		return ds;
 	}
 	
